@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Debug C++ file",
+        "type": "cppvsdbg",  // Windows 환경에서의 디버깅
+        "request": "launch",
+        "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",  // 실행할 프로그램
+        "args": [],
+        "stopAtEntry": false,  // 디버깅 시작 시 자동으로 멈추지 않음
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "externalConsole": false,  // 외부 콘솔을 사용하지 않음
+        "MIMode": "gdb",  // Windows에서 gdb를 사용할 경우
+        "setupCommands": [
+          {
+            "description": "Enable pretty-printing for gdb",
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ],
+        "miDebuggerPath": "C:/path/to/gdb.exe",  // gdb 경로 (Windows에 설치되어 있어야 함)
+        "preLaunchTask": "save and compile for C++"  // 빌드를 먼저 실행
+      }
+    ]
+  }
+  
