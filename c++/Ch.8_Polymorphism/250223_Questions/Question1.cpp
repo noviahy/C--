@@ -8,8 +8,8 @@ using namespace std;
 class Employee
 {
 private:
-    char name[5];
     int incentive;
+    char name[5];
 
 protected:
     int salary;
@@ -21,14 +21,18 @@ public:
         strcpy(this->name, name);
     }
 
+    void ShowName() const
+    {
+        cout << "Name: " << name << endl;
+    }
+
     void AddSalesResult(int performance)
     {
         salary = salary + (performance * incentive);
     }
 
-    virtual int GetPay() const = 0;
     virtual void ShowSalaryInfo() const = 0;
-    virtual ~Employee() {} // 이거 왜함?
+    virtual ~Employee() {}
 };
 
 class ForeignSalesWorker : public Employee
@@ -38,14 +42,11 @@ private:
 
 public:
     ForeignSalesWorker(char *name, int salary, int percent, int risk)
-        : Employee(name, salary, percent), level(risk)
-    {
-        level = level * salary;
-    }
+        : Employee(name, salary, percent), level(risk * salary) {}
 
-    void ShowSalaryInfo()
+    void ShowSalaryInfo() const override
     {
-        cout << "name: " << name << endl;
+        ShowName();
         cout << "salary: " << salary << endl;
         cout << "risk pay: " << level << endl;
         cout << "sum: " << salary + level << endl
@@ -76,7 +77,7 @@ public:
 
     void ShowAllSalaryInfo()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < empNum; i++)
         {
             worker[i]->ShowSalaryInfo();
         }
@@ -94,11 +95,11 @@ int main()
     handler.AddEmployee(fseller1);
 
     ForeignSalesWorker *fseller2 = new ForeignSalesWorker("Yoon", 1000, 0.1, RISK_LEVEL::RISK_B);
-    fseller1->AddSalesResult(7000); // 영업실적 7000
+    fseller2->AddSalesResult(7000); // 영업실적 7000
     handler.AddEmployee(fseller2);
 
     ForeignSalesWorker *fseller3 = new ForeignSalesWorker("Lee", 1000, 0.1, RISK_LEVEL::RISK_C);
-    fseller1->AddSalesResult(7000); // 영업실적 7000
+    fseller3->AddSalesResult(7000); // 영업실적 7000
     handler.AddEmployee(fseller3);
 
     // 이번 달에 지불해야 할 급여의 정보
