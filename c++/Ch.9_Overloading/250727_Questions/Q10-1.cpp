@@ -39,7 +39,7 @@ bool operator==(const Point &pos1, const Point &pos2)
 
 bool operator!=(const Point &pos1, const Point &pos2)
 {
-    return !(pos1.xpos == pos2.xpos) && (pos1.ypos == pos2.ypos);
+    return !(pos1.xpos == pos2.xpos) || !(pos1.ypos == pos2.ypos);
 }
 
 int main()
