@@ -2,6 +2,7 @@
 // 다항 연산자 오버로딩
 
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 class Point
@@ -29,7 +30,30 @@ public:
         else
             return Point(xpos, ypos);
     }
+
     friend Point operator-(const Point &ref);
+
+    Point &operator~()
+    {
+        int i = 0;
+        int arr[32];
+        int num = xpos;
+        ypos = 0;
+
+        while (num > 0)
+        {
+            arr[i++] = num % 2;
+            num /= 2;
+        }
+
+        for (int j = 0; j < i; j++)
+            arr[j] = (arr[j] == 0) ? 1 : 0;
+
+        for (int j = 0; j < i; j++)
+            ypos += arr[j] * pow(2, j);
+
+        return *this;
+    }
 };
 
 Point operator-(const Point &ref)
@@ -55,9 +79,15 @@ int main()
     Point pos3(-1, -2);
     Point pos4 = +pos3;
 
+    Point pos5(10, 0);
+    pos5 = ~pos5;
+    
+
     pos1.ShowPosition();
     pos2.ShowPosition();
     pos3.ShowPosition();
     pos4.ShowPosition();
+    pos5.ShowPosition();
+
     return 0;
 }
