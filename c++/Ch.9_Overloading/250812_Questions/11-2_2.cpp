@@ -8,48 +8,59 @@ using namespace std;
 
 class Pointx
 {
+private:
+    int ypos;
+    Pointy *arry;
+
 public:
+    Pointx(int y)
+        : ypos(y) { arry = new Pointy[ypos]; }
+    
+    Pointy &operator[](int idx) const
+    {
+        if (idx < 0 || idx > ypos)
+        {
+            cout << "Array index out of bound exception" << endl;
+            exit(1);
+        }
+        return arry[idx];
+    }
+    
     friend ostream &operator<<(ostream &os, const Pointx &pos);
 };
 
-class Pointy : Pointx
+class Pointy
 {
-private:
-    int num;
-
 public:
-    Pointy(int number)
-    :num(number) {};
-
-    friend ostream &operator<<(ostream &os, const Point &pos);
+    friend ostream &operator<<(ostream &os, const Pointx &pos);
 };
 
 class BoundCheck2DIntArray
 {
 private:
-    Pointx x;
-    Pointy y;
+    int xpos;
+    int ypos;
+    Pointx *arrx;
 
 public:
     BoundCheck2DIntArray(int x, int y = 0)
         : xpos(x), ypos(y)
     {
-        arr = new Point[xpos][ypos];
+        arrx = new Pointx[xpos];
+        Pointx(ypos);
     }
 
-    Point operator[](int idx) const
+    Pointx &operator[](int idx)
     {
         if (idx < 0 || idx > xpos)
         {
             cout << "Array index out of bound exception" << endl;
             exit(1);
         }
-        return arr[idx];
+        return arrx[idx];
     }
 
-    Point operator[]()
-    {
-    }
+    
 };
 
 int main()
