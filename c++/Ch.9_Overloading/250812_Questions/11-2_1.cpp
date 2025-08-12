@@ -1,0 +1,89 @@
+// 468p
+// C++ 기반의 데이터 입출력
+// 예제 StablePointPtrArray.cpp 활용해 Point 클래스를 대상으로 연산자 오버로딩 진행
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+class Point
+{
+private:
+    int xpos, ypos;
+
+public:
+    Point(int x = 0, int y = 0) : xpos(x), ypos(y) {}
+    friend ostream &operator<<(ostream &os, const Point &pos);
+    friend ostream &operator<<(ostream &os, const Point *pos);
+};
+
+ostream &operator<<(ostream &os, const Point &pos) // 객체를 받는다
+{
+    os << '[' << pos.xpos << ", " << pos.ypos << ']' << endl;
+    return os;
+}
+
+ostream &operator<<(ostream &os, const Point *pos) // 주소로 받는다
+{
+    os << '[' << (*pos).xpos << ", " << (*pos).ypos << ']' << endl;
+    return os;
+}
+
+
+
+typedef Point *POINT_PTR;
+
+class BoundCheckPointPtrArray
+{
+private:
+    POINT_PTR *arr;
+    int arrlen;
+
+    BoundCheckPointPtrArray(const BoundCheckPointPtrArray &arr) {}
+    BoundCheckPointPtrArray &operator=(const BoundCheckPointPtrArray &arr) {}
+
+public:
+    BoundCheckPointPtrArray(int len) : arrlen(len)
+    {
+        arr = new POINT_PTR[len];
+    }
+
+    POINT_PTR operator[](int idx) const
+    {
+        if (idx < 0 || idx > arrlen)
+        {
+            cout << "Array index out of bound exception" << endl;
+            exit(1);
+        }
+        return arr[idx];
+    }
+
+    POINT_PTR &operator[](int idx)
+    {
+        if (idx < 0 || idx > arrlen)
+        {
+            cout << "Array index out of bound exception" << endl;
+            exit(1);
+        }
+        return arr[idx];
+    }
+
+    int GetArrLen() const { return arrlen; }
+    ~BoundCheckPointPtrArray() { delete[] arr; }
+};
+
+int main()
+{
+    BoundCheckPointPtrArray arr(3);
+    arr[0] = new Point(3, 4);
+    arr[1] = new Point(5, 6);
+    arr[2] = new Point(7, 8);
+
+    for (int i = 0; i < arr.GetArrLen(); i++)
+        cout << arr[i];
+    delete arr[0];
+    delete arr[1];
+    delete arr[2];
+
+    return 0;
+}
