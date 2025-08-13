@@ -6,6 +6,22 @@
 #include <cstring>
 using namespace std;
 
+class Pointy
+{
+private:
+    int num;
+
+public:
+    Pointy(int number = 0) : num(number) {}
+    friend ostream &operator<<(ostream &os, const Pointy &pos);
+};
+
+ostream &operator<<(ostream &os, const Pointy &pos)
+{
+    os << pos.num << endl;
+    return os;
+}
+
 class Pointx
 {
 private:
@@ -13,9 +29,10 @@ private:
     Pointy *arry;
 
 public:
+    Pointx() : ypos(0), arry(nullptr) {}
     Pointx(int y)
         : ypos(y) { arry = new Pointy[ypos]; }
-    
+
     Pointy &operator[](int idx) const
     {
         if (idx < 0 || idx > ypos)
@@ -25,14 +42,6 @@ public:
         }
         return arry[idx];
     }
-    
-    friend ostream &operator<<(ostream &os, const Pointx &pos);
-};
-
-class Pointy
-{
-public:
-    friend ostream &operator<<(ostream &os, const Pointx &pos);
 };
 
 class BoundCheck2DIntArray
@@ -43,24 +52,23 @@ private:
     Pointx *arrx;
 
 public:
-    BoundCheck2DIntArray(int x, int y = 0)
+    BoundCheck2DIntArray(int x = 0, int y = 0)
         : xpos(x), ypos(y)
     {
         arrx = new Pointx[xpos];
-        Pointx(ypos);
+        for (int i = 0; i < xpos; i++)
+            arrx[i] = Pointx(ypos);
     }
 
     Pointx &operator[](int idx)
     {
-        if (idx < 0 || idx > xpos)
+        if (idx < 0 || idx >= xpos)
         {
             cout << "Array index out of bound exception" << endl;
             exit(1);
         }
         return arrx[idx];
     }
-
-    
 };
 
 int main()
@@ -70,6 +78,10 @@ int main()
     for (int n = 0; n < 3; n++)
         for (int m = 0; m < 4; m++)
             arr2d[n][m] = n + m;
+
+    for (int n = 0; n < 3; n++)
+        for (int m = 0; m < 4; m++)
+            cout << arr2d[n][m];
 
     return 0;
 }
