@@ -45,7 +45,7 @@ int main()
     SwapData(point);
     point.ShowPosition();
 
-    int arr1[3] = {1, 2, 3};
+    int arr1[3] = {1, 2, 3}; 
     double arr2[3] = {1.1, 2.2, 3.3};
 
     cout << SumArray(arr1, 3) << endl;
