@@ -48,36 +48,42 @@ public:
         {
             for (int j = 0; j < num; j++)
             {
-                return arr[row + i][column + j] != first;
+                if (arr[row + i][column + j] != first)
+                {
+                    return true;
+                }
             }
         }
+        return false;
     }
 
-    int DoQuard(int num) // 2진수를 2로 나눠서 들고와야함
+    void DoQuard(int num)
     {
         cout << '(';
         int divide = num;
 
+
+
+        /*
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
             {
-                if (Check(divide, divide * i, divide * j) == false) // 박스가 모두 같지 않을때
+                if (Check(divide, divide * i, divide * j) == true) // 박스가 모두 같지 않을때
                 {
                    return DoQuard(divide / 2);
                 }
                 else // 모두 같을때
                 {
                     cout << arr[i * divide][j * divide];
-                    if (j != 3)
-                        cout << ',';
-
-                    j++;
                 }
             }
             cout << ')';
-            i++;
-        }
+        }*/
+    }
+
+    void Output(){
+        
     }
 };
 
