@@ -1,5 +1,6 @@
 // 백준 1992번
 // 쿼드트리
+// C++
 
 #include <iostream>
 #include <cstring>
@@ -10,12 +11,11 @@ class Quard
 {
 private:
     int binary;
-    int divide;
     vector<vector<int>> arr;
 
 public:
     Quard(int i) // 생성자
-        : binary(i), divide(i)
+        : binary(i)
     {
         CreateArr(binary);
     }
@@ -38,6 +38,7 @@ public:
             }
             cout << endl;
         }
+        DoQuard(binary / 2);
     }
 
     bool Check(int num, int row, int column)
@@ -52,22 +53,29 @@ public:
         }
     }
 
-    void DoQuard()
+    int DoQuard(int num) // 2진수를 2로 나눠서 들고와야함
     {
+        cout << '(';
+        int divide = num;
+
         for (int i = 0; i < 4; i++)
         {
             for (int j = 0; j < 4; j++)
             {
-                divide /= 2;
-
-                if (Check(divide, divide * i, divide * j) == false)
+                if (Check(divide, divide * i, divide * j) == false) // 박스가 모두 같지 않을때
                 {
-                    DoQuard();
+                   return DoQuard(divide / 2);
                 }
+                else // 모두 같을때
+                {
+                    cout << arr[i * divide][j * divide];
+                    if (j != 3)
+                        cout << ',';
 
-                else
                     j++;
+                }
             }
+            cout << ')';
             i++;
         }
     }
@@ -78,16 +86,12 @@ int InputBin() // 2진수 입력 범위 외 반복
     int binary = 0;
     cout << "Enter a binary number N (0 < N < 65): ";
     cin >> binary; // 입력받기
-    if (binary < 0 || binary > 65 || binary & (binary - 1) != 0)
+    if (binary <= 0 || binary >= 65 || (binary & (binary - 1)) != 0)
     {
         cout << "Not within range. Please input again" << endl;
-        cout << InputBin() << endl;
+        return InputBin();
     }
     return binary;
-}
-
-void output() // 결과 출력
-{
 }
 
 int main() // 메인함수
