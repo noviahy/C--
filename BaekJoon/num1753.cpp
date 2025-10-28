@@ -1,6 +1,7 @@
 // 백준 2252번
 // Dijkstra
 // C++
+// 못품
 
 #include <iostream>
 #include <vector>
