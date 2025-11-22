@@ -22,7 +22,7 @@ public:
     Flow(int N) : N(N)
     {
         adj.resize(52);
-        capacity.resize(N, vector<int>(52, 0));
+        capacity.resize(52, vector<int>(52, 0));
         start = ChangeAlp('A');
         end = ChangeAlp('Z');
     }
@@ -41,7 +41,7 @@ public:
         int p = ChangeAlp(P);
         int c = ChangeAlp(C);
 
-        if (P == -1 || C == -1) return;
+        if (p == -1 || c == -1) return;
 
         adj[p].push_back(c);
         adj[c].push_back(p);
